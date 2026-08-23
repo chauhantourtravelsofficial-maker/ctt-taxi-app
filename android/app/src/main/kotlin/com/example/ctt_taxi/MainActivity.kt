@@ -1,0 +1,5 @@
+package com.example.ctt_taxi
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity()
