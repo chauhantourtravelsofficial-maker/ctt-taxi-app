@@ -1,4 +1,4 @@
-name: Build Play Store AAB
+name: Build Signed Play Store AAB
 
 on:
   push:
@@ -29,12 +29,12 @@ jobs:
       - name: 📦 Install dependencies
         run: flutter pub get
 
-     - name: 🔓 Decode Keystore (Without GitHub Secrets)
+      - name: 🔓 Decode Keystore
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
-          echo "storePassword=android" > android/app/key.properties
-          echo "keyPassword=android" >> android/app/key.properties
-          echo "keyAlias=ctt_alias" >> android/app/key.properties
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/upload-keystore.jks
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> android/app/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/app/key.properties
+          echo "keyAlias=${{ secrets.ALIAS }}" >> android/app/key.properties
           echo "storeFile=upload-keystore.jks" >> android/app/key.properties
 
       - name: 🚀 Build Signed App Bundle (.aab)
