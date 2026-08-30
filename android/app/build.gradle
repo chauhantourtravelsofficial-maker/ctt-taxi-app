@@ -23,15 +23,14 @@ if (flutterVersionName == null) {
     flutterVersionName = "1.0"
 }
 
-// 🟢 YAHAN SE TUMHARI PURANI KEY UTHANE KA SYSTEM HAI 🟢
+// 🟢 RASTA THEEK KAR DIYA GAYA HAI (rootProject add kiya hai) 🟢
 def keystoreProperties = new Properties()
-def keystorePropertiesFile = file('key.properties')
+def keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
 android {
-    // ⚠️ NEECHE APNI APP KA ASLI PACKAGE NAME LIKHNA (jaise: "com.example.taxi")
     namespace "com.ctt.passengerdriver" 
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
@@ -51,7 +50,6 @@ android {
     }
 
     defaultConfig {
-        // ⚠️ NEECHE BHI APNI APP KA ASLI PACKAGE NAME LIKHNA
         applicationId "com.ctt.passengerdriver"
         minSdk flutter.minSdkVersion
         targetSdk flutter.targetSdkVersion
@@ -59,7 +57,6 @@ android {
         versionName flutterVersionName
     }
 
-    // 🟢 YAHAN TUMHARI KEYSTORE KI DETAILS SET HO RAHI HAIN 🟢
     signingConfigs {
         release {
             keyAlias = keystoreProperties.getProperty('keyAlias')
@@ -71,7 +68,6 @@ android {
 
     buildTypes {
         release {
-            // 🟢 AUR YAHAN BATAYA GAYA HAI KI RELEASE BUILD MEIN WAHI KEY LAGE 🟢
             signingConfig signingConfigs.release
         }
     }
