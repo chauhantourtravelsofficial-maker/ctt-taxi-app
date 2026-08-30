@@ -38,10 +38,9 @@ jobs:
           echo "storeFile=upload-keystore.jks" >> android/app/key.properties
 
       - name: 🚀 Build Signed App Bundle (.aab)
-        run: flutter build appbundle --release
-
+        run: flutter build apk --release
       - name: 📤 Upload AAB
         uses: actions/upload-artifact@v4
         with:
           name: CTT-Taxi-PlayStore-AAB
-          path: build/app/outputs/bundle/release/app-release.aab
+        path: build/app/outputs/flutter-apk/app-release.apk
