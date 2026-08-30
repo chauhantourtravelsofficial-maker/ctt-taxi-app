@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 import 'database.dart';
-import 'terms_conditions.dart'; // इसे हम अगले स्टेप में बनाएंगे
+import 'terms_conditions.dart'; 
+import 'login_screen.dart'; // लॉगआउट के लिए लॉगिन स्क्रीन को इम्पोर्ट किया है
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
+
+  // यह फंक्शन हर खाली बटन पर "Coming Soon" का मैसेज दिखाएगा
+  void _showComingSoon(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('This feature is coming soon in the next update!'),
+        backgroundColor: Colors.orange,
+        duration: Duration(seconds: 2), // मैसेज 2 सेकंड तक दिखेगा
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +25,12 @@ class ProfileScreen extends StatelessWidget {
         title: const Text('My Profile', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 24)),
         backgroundColor: Colors.white,
         elevation: 0,
-        actions: [IconButton(icon: const Icon(Icons.notifications_none, color: Colors.black), onPressed: () {})],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_none, color: Colors.black), 
+            onPressed: () => _showComingSoon(context), // नोटिफिकेशन आइकन पर भी मैसेज
+          )
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(15),
@@ -51,7 +68,8 @@ class ProfileScreen extends StatelessWidget {
                   const Spacer(),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.black, foregroundColor: Colors.white),
-                    onPressed: () {}, child: const Text('Upgrade Now >', style: TextStyle(fontSize: 12)),
+                    onPressed: () => _showComingSoon(context), // अपग्रेड बटन पर भी मैसेज
+                    child: const Text('Upgrade Now >', style: TextStyle(fontSize: 12)),
                   ),
                 ],
               ),
@@ -64,11 +82,11 @@ class ProfileScreen extends StatelessWidget {
             _buildCard(
               Column(
                 children: [
-                  _buildTile(Icons.person, 'Personal Information', () {}),
-                  _buildTile(Icons.language, 'Change Language', () {}),
-                  _buildTile(Icons.credit_card, 'Payment Methods', () {}),
-                  _buildTile(Icons.history, 'Ride History', () {}),
-                  _buildTile(Icons.favorite, 'Favourite Rides', () {}),
+                  _buildTile(Icons.person, 'Personal Information', () => _showComingSoon(context)),
+                  _buildTile(Icons.language, 'Change Language', () => _showComingSoon(context)),
+                  _buildTile(Icons.credit_card, 'Payment Methods', () => _showComingSoon(context)),
+                  _buildTile(Icons.history, 'Ride History', () => _showComingSoon(context)),
+                  _buildTile(Icons.favorite, 'Favourite Rides', () => _showComingSoon(context)),
                 ],
               ),
             ),
@@ -80,23 +98,30 @@ class ProfileScreen extends StatelessWidget {
             _buildCard(
               Column(
                 children: [
-                  _buildTile(Icons.headset_mic, 'Help & Support', () {}),
-                  _buildTile(Icons.security, 'Safety Center', () {}),
+                  _buildTile(Icons.headset_mic, 'Help & Support', () => _showComingSoon(context)),
+                  _buildTile(Icons.security, 'Safety Center', () => _showComingSoon(context)),
+                  
+                  // Terms & Conditions (यह असली स्क्रीन पर ले जाएगा क्योंकि यह बना हुआ है)
                   _buildTile(Icons.article, 'Terms & Conditions', () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const TermsConditionsScreen()));
                   }),
-                  _buildTile(Icons.info, 'About Us', () {}),
+                  
+                  _buildTile(Icons.info, 'About Us', () => _showComingSoon(context)),
                 ],
               ),
             ),
             const SizedBox(height: 20),
 
-            // Log Out Button
+            // Log Out Button (यह अब काम करेगा और सीधा लॉगिन स्क्रीन पर ले जाएगा)
             SizedBox(
               width: double.infinity, height: 45,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.white, foregroundColor: Colors.red, side: const BorderSide(color: Colors.red)),
-                onPressed: () {}, child: const Text('Log Out', style: TextStyle(fontWeight: FontWeight.bold)),
+                onPressed: () {
+                  // लॉगआउट करने पर लॉगिन स्क्रीन खुल जाएगी
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+                }, 
+                child: const Text('Log Out', style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
           ],
