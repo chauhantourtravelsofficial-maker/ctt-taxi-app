@@ -1,4 +1,4 @@
- name: Build Signed Play Store APK
+name: Build Signed Play Store APK
 
 on:
   push:
