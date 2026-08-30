@@ -1,4 +1,4 @@
-name: Build Signed Play Store AAB
+ name: Build Signed Play Store APK
 
 on:
   push:
@@ -37,10 +37,11 @@ jobs:
           echo "keyAlias=${{ secrets.ALIAS }}" >> android/app/key.properties
           echo "storeFile=upload-keystore.jks" >> android/app/key.properties
 
-      - name: 🚀 Build Signed App Bundle (.aab)
+      - name: 🚀 Build Signed APK
         run: flutter build apk --release
-      - name: 📤 Upload AAB
+        
+      - name: 📤 Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: CTT-Taxi-PlayStore-AAB
-        path: build/app/outputs/flutter-apk/app-release.apk
+          name: CTT-Taxi-PlayStore-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
